@@ -1,7 +1,10 @@
 {-# LANGUAGE GADTs, DataKinds, TypeOperators, LambdaCase #-}
 {-# LANGUAGE StandaloneDeriving, DerivingStrategies #-}
 
-module Data.MaybeWhen where
+module Data.MaybeWhen
+  ( MaybeWhen(WJust, WNothing),
+    fromWJust
+  ) where
 
 import Control.Applicative
 
@@ -14,8 +17,8 @@ deriving instance Ord a => Ord (MaybeWhen p a)
 deriving instance Show a => Show (MaybeWhen p a)
 deriving instance (Read a, p ~ 'True) => Read (MaybeWhen p a)
 
-fromJust :: MaybeWhen 'False a -> a
-fromJust (WJust a) = a
+fromWJust :: MaybeWhen 'False a -> a
+fromWJust (WJust a) = a
 
 instance Functor (MaybeWhen p) where
   fmap f = \case
